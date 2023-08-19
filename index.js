@@ -41,12 +41,40 @@ var isRunning = true;
         }
 
         // Select
+        else if (Number(input) === 2) {
+            const stocks = await ctl.getAll();
+            console.log('List of Stocks:');
+            stocks.forEach((stock) => {
+              console.log(
+                `ID: ${stock.ItemId}, Name: ${stock.ItemName}, Stock: ${stock.Stock}, Price: ${stock.Price}, Location: ${stock.Location}`
+              );
+            });
+            prompt('Press Enter to continue...');
+          }
+      
+          // Update
+          else if (Number(input) === 3) {
+            let itemId = prompt('Input ID of the Stock to update: ');
+            let newData = {};
+      
 
-
-        // Update
-
-        
-        // Delete
-
-    }
-})();
+            newData.ItemName = prompt('Input New Name for the Stock: ');
+            newData.Stock = prompt('Input New Stock Quantity: ');
+            newData.Price = prompt('Input New Price: ');
+            newData.Location = prompt('Input New Location: ');
+      
+            await ctl.update(itemId, newData);
+          }
+      
+          // Delete
+          else if (Number(input) === 4) {
+            let itemId = prompt('Input ID of the Stock to delete: ');
+            await ctl.delete(itemId);
+          }
+      
+          // Exit
+          else if (Number(input) === 5) {
+            isRunning = false;
+          }
+        }
+      })();
